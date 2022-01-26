@@ -6,6 +6,7 @@ let ties = 0;
 let gameNum = 1;
 let keepPlaying = true;
 let askPlay = "yes";
+let validPlay = false;
 function computerPlay() {
     var play = Math.floor(Math.random() * 3);
     if (play === 0){
@@ -22,50 +23,62 @@ function computerPlay() {
     }
 }
 function playRound(playerSelection, computerSelection) {
-    if (playerSelection === "rock") {
-        if (computerSelection === "Rock") {
-            return("Rock ties with Rock! It's a draw.");
+    
+        if (playerSelection === "rock") {
+            validPlay = true;
+            if (computerSelection === "Rock") {
+                return("Rock ties with Rock! It's a draw.");
+            }
+            if (computerSelection === "Paper") {
+                oppScore = oppScore + 1;
+                return("Paper beats Rock. You lose!");
+            }
+            if (computerSelection === "Scissors") {
+                score = score + 1;
+                return("Rock beats Scissors. You win!");
+            }
         }
-        if (computerSelection === "Paper") {
-            oppScore = oppScore + 1;
-            return("Paper beats Rock. You lose!");
+        else if (playerSelection === "paper") {
+            validPlay = true;
+            if (computerSelection === "Rock") {
+                score = score + 1;
+                return("Paper beats Rock. You win!");
+                }
+            if (computerSelection === "Paper") {
+                return("Paper ties with Paper! It's a draw.");
+            }
+            if (computerSelection === "Scissors") {
+                oppScore = oppScore + 1;
+                return("Scissors beat Paper. You lose!");
+            }
         }
-        if (computerSelection === "Scissors") {
-            score = score + 1;
-            return("Rock beats Scissors. You win!");
+        else if (playerSelection === "scissors") {
+            validPlay = true;
+            if (computerSelection === "Rock") {
+                oppScore = oppScore + 1;
+                return("Rock beats Scissors. You lose!");
+            }
+            if (computerSelection === "Paper") {
+                score = score + 1;
+                return("Scissors beat Paper. You win!");
+            }
+            if (computerSelection === "Scissors") {
+                return("Scissors tie with Scissors. It's a draw.");
+            }
         }
-    }
-    else if (playerSelection === "paper") {
-        if (computerSelection === "Rock") {
-            score = score + 1;
-            return("Paper beats Rock. You win!");
-        }
-        if (computerSelection === "Paper") {
-            return("Paper ties with Paper! It's a draw.");
-        }
-        if (computerSelection === "Scissors") {
-            oppScore = oppScore + 1;
-            return("Scissors beat Paper. You lose!");
-        }
-    }
-    else if (playerSelection === "scissors") {
-        if (computerSelection === "Rock") {
-            oppScore = oppScore + 1;
-            return("Rock beats Scissors. You lose!");
-        }
-        if (computerSelection === "Paper") {
-            score = score + 1;
-            return("Scissors beat Paper. You win!");
-        }
-        if (computerSelection === "Scissors") {
-            return("Scissors tie with Scissors. It's a draw.");
-        }
-    }
+    
+    
 }
 function game(){
     for (var i = 1; i < 6; i++){
         let computerChoice = computerPlay();
         let playerChoice = prompt("Enter Rock, Paper, or Scissors");
+        playerChoice = playerChoice.toLowerCase();
+        if (playerChoice != "rock" || playerChoice != "paper" || playerChoice != "scissors") {
+            while (playerChoice != "rock" && playerChoice != "paper" && playerChoice != "scissors"){
+                playerChoice = prompt("Enter Rock, Paper, or Scissors");
+            }
+        }
         console.log("Game " + gameNum + " Round " + i + ": " + playRound(playerChoice.toLowerCase(), computerChoice));
         console.log("The score is " + score + "-" + oppScore);
     }
@@ -89,7 +102,7 @@ while (keepPlaying === true) {
     console.log("Total Record: " + gameScore + "-" + oppGameScore + "-" + ties);
     askPlay = prompt("Continue playing? (Yes or No)");
     askPlay = askPlay.toLowerCase();
-    if (askPlay === "yes") {
+    if (askPlay === "yes" || askPlay === "y" || askPlay === "rock" || askPlay === "scissors" || askPlay === "paper") {
         keepPlaying = true;
         gameNum = gameNum + 1;
     }
