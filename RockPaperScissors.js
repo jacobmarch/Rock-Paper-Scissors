@@ -7,6 +7,11 @@ let gameNum = 1;
 let keepPlaying = true;
 let askPlay = "yes";
 let validPlay = false;
+let playerChoice = "";
+let btnR = document.querySelector('#rock');
+let btnP = document.querySelector('#paper');
+let btnS = document.querySelector('#scissors');
+let btnClass = document.querySelector('.playButton');
 function computerPlay() {
     var play = Math.floor(Math.random() * 3);
     if (play === 0){
@@ -70,20 +75,35 @@ function playRound(playerSelection, computerSelection) {
     
 }
 function game(){
-    for (var i = 1; i < 6; i++){
+    let roundNum = 1;
+    //for (var i = 1; i < 6; i++){
         let computerChoice = computerPlay();
-        let playerChoice = prompt("Enter Rock, Paper, or Scissors");
+        /*let playerChoice = prompt("Enter Rock, Paper, or Scissors");
         playerChoice = playerChoice.toLowerCase();
         if (playerChoice != "rock" || playerChoice != "paper" || playerChoice != "scissors") {
             while (playerChoice != "rock" && playerChoice != "paper" && playerChoice != "scissors"){
                 playerChoice = prompt("Enter Rock, Paper, or Scissors");
             }
-        }
-        console.log("Game " + gameNum + " Round " + i + ": " + playRound(playerChoice.toLowerCase(), computerChoice));
+        } */
+        btnR.addEventListener('click', () => {
+            playerChoice = "rock";
+            playRound(playerChoice, computerChoice)
+        });
+        btnP.addEventListener('click', () => {
+            playerChoice = "paper";
+            playRound(playerChoice, computerChoice)
+        });
+        btnS.addEventListener('click', () => {
+            playerChoice = "scissors";
+            playRound(playerChoice, computerChoice)
+        });
+        console.log("Game " + gameNum + " Round " + roundNum + ": " + playRound(playerChoice.toLowerCase(), computerChoice));
         console.log("The score is " + score + "-" + oppScore);
-    }
+    //}
+    roundNum = roundNum + 1;
 }
-while (keepPlaying === true) {
+
+/*btnClass.addEventListener('click', () => {
     score = 0;
     oppScore = 0;
     console.log(game());
@@ -110,4 +130,6 @@ while (keepPlaying === true) {
         keepPlaying = false;
     }
     
-}
+}); */
+
+btnClass.addEventListener('click', game());
