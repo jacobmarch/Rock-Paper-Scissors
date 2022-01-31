@@ -11,7 +11,7 @@ let playerChoice = "";
 let btnR = document.querySelector('#rock');
 let btnP = document.querySelector('#paper');
 let btnS = document.querySelector('#scissors');
-let btnClass = document.querySelector('.playButton');
+let btnClass = document.querySelectorAll('.playButton');
 function computerPlay() {
     var play = Math.floor(Math.random() * 3);
     if (play === 0){
@@ -74,6 +74,7 @@ function playRound(playerSelection, computerSelection) {
     
     
 }
+let computerChoice = computerPlay();
 function game(){
     let roundNum = 1;
     //for (var i = 1; i < 6; i++){
@@ -132,4 +133,7 @@ function game(){
     
 }); */
 
-btnClass.addEventListener('click', game());
+btnClass.addEventListener('click', {
+    computerChoice = computerPlay(),
+    playRound(playerChoice, computerChoice)
+});
